@@ -1,0 +1,40 @@
+version: "3.1"
+language: "ru"
+
+pipeline:
+  - name: WhitespaceTokenizer
+  - name: EntitySynonymMapper
+  - name: CountVectorsFeaturizer
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: "word"
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier
+    epochs: 275
+    constrain_similarities: true
+    entity_recognition: true
+    intent_classification: true
+    hidden_layers_sizes:
+      text: [ 256, 128 ]
+  - name: FallbackClassifier
+    threshold: 0.8
+    fallback_action_name: "action_default_fallback"
+
+policies:
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 250
+    constrain_similarities: true
+  - name: RulePolicy
+    core_fallback_threshold: 0.8
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: true
+    restrict_rules: true
+    check_for_contradictions: true
+
+recipe: default.v1
+assistant_id: 20240426-101939-red-circle

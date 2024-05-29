@@ -1,0 +1,57 @@
+version: '3'
+services:
+  rasa:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "5005:5005"
+    command:
+      - rasa
+      - run
+      - --enable-api
+      - --endpoints
+      - endpoints.yml
+
+  action_server:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "5055:5055"
+    command:
+      - rasa
+      - run
+      - actions
+
+  telegram_bot:
+    build: ./telegram
+    volumes:
+      - ./telegram:/app
+    ports:
+      - "4000:4000"
+
+  ml_model:
+    build: ./ML
+    volumes:
+      - ./ML:/app
+    ports:
+      - "5000:5000"
+
+  postgres:
+    container_name: postgres-bot_db
+    image: postgres:alpine
+    ports:
+      - "5777:5432"
+    environment:
+      POSTGRES_USER: olga_mironova
+      POSTGRES_PASSWORD: 8184
+      POSTGRES_DB: telegram
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./postgres_dump.sql:/var/lib/postgresql/dump/postgres_dump.sql
+
+volumes:
+  postgres-data:
+    driver: local
