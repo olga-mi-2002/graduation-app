@@ -1,0 +1,78 @@
+version: "3.1"
+stories:
+- story: User greets dynamically
+  steps:
+  - intent: greet
+  - action: action_greet
+
+- story: User asks about business incubator
+  steps:
+  - intent: ask_business_incubator
+  - action: utter_explain_business_incubator
+
+- story: User agree with answer
+  steps:
+    - intent: Agree
+    - action: utter_agree
+
+- story: User disagree with answer
+  steps:
+    - intent: disagree
+    - action: utter_disagree
+
+- story: User asks about MP
+  steps:
+  - intent: MP
+  - action: utter_MP
+
+- story: User asks about MIP
+  steps:
+  - intent: MIP
+  - action: utter_Mip
+
+- story: User says goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+
+- story: User affirms
+  steps:
+    - intent: affirm
+    - action: utter_happy
+
+- story: User denies
+  steps:
+    - intent: deny
+
+- story: User is in a great mood
+  steps:
+    - intent: mood_great
+    - action: utter_happy
+    - action: utter_anything_else
+
+- story: User is unhappy
+  steps:
+    - intent: mood_unhappy
+
+- story: User needs further assistance
+  steps:
+    - intent: mood_great
+    - action: utter_happy
+    - intent: affirm
+    - action: utter_anything_else
+    - intent: deny
+    - action: utter_goodbye
+
+- story: User interaction with bot identity
+  steps:
+    - intent: mood_unhappy
+    - intent: deny
+    - action: utter_iamabot
+    - action: utter_goodbye
+
+- story: User says goodbye after help
+  steps:
+    - intent: mood_unhappy
+    - intent: affirm
+    - intent: goodbye
+    - action: utter_goodbye

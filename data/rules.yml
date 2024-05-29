@@ -1,0 +1,44 @@
+version: "3.1"
+
+rules:
+  - rule: Greet User
+    steps:
+    - intent: greet
+    - action: action_greet
+
+  - rule: Explain Business Incubator
+    steps:
+    - intent: ask_business_incubator
+    - action: utter_explain_business_incubator
+
+  - rule: Handle Out of Scope
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+
+  - rule: Agree
+    steps:
+      - intent: agree
+      - action: utter_agree
+
+  - rule: Disagree
+    steps:
+      - intent: disagree
+      - action: utter_disagree
+
+  - rule: MP
+    steps:
+      - intent: MP
+      - action: utter_MP
+
+  - rule: Mip
+    steps:
+      - intent: Mip
+      - action: utter_Mip
+
+  - rule: Ask the user to rephrase in case of low NLU confidence
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
+
+
